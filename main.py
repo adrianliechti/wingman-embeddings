@@ -2,6 +2,7 @@ import os
 import io
 import base64
 import uvicorn
+import torch
 
 from fastapi import FastAPI
 from pydantic import BaseModel, field_validator
@@ -15,7 +16,13 @@ model = AutoModel.from_pretrained(
     trust_remote_code=True,
 )
 
+device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+model = model.to(device)
+
 model.eval()
+
+encode_text = getattr(model, "encode_text", getattr(model, "encode", None))
+encode_image = getattr(model, "encode_image", None)
 
 app = FastAPI(
     title="LLM Platform Embeddings"
@@ -49,22 +56,17 @@ class EmbeddingRequest(BaseModel):
 
 @app.post("/embeddings")
 @app.post("/v1/embeddings")
-async def embed(request: EmbeddingRequest):
+def embed(request: EmbeddingRequest):
     input = request.input
 
     data = []
     
     for i, input in enumerate(input):
         if input.text:
-            encode = getattr(model, "encode_text", None)
-            
-            if encode == None:
-                encode = getattr(model, "encode", None)
-                
-            if encode == None:
+            if encode_text is None:
                 raise ValueError('Model does not have a method to encode text')
             
-            embedding = encode(input.text)
+            embedding = encode_text(input.text)
 
             data.append({
                 "object": "embedding",
@@ -73,20 +75,18 @@ async def embed(request: EmbeddingRequest):
             })
             
         if input.image:
-            encode = getattr(model, "encode_image", None)
-            
-            if encode == None:
+            if encode_image == None:
                 raise ValueError('Model does not have a method to encode image')
             
             if input.image.startswith("http://") or input.image.startswith("https://"):
-                embedding = encode(input.image)
+                embedding = encode_image(input.image)
             else:
                 image_data = base64.b64decode(input.image)
 
                 image = Image.open(io.BytesIO(image_data))
                 image = image.convert("RGB")
 
-                embedding = encode(image)
+                embedding = encode_image(image)
             
             data.append({
                 "object": "embedding",
