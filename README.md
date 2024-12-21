@@ -9,7 +9,7 @@ Defaults to [jinaai/jina-embeddings-v3](https://huggingface.co/jinaai/jina-embed
 docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-embeddings-v3 ghcr.io/adrianliechti/llama-embeddings
 
 # Using CLIP Model
-docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-clip-v1 ghcr.io/adrianliechti/llama-embeddings
+docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-clip-v2 ghcr.io/adrianliechti/llama-embeddings
 ```
 
 ## Text Embeddings
@@ -66,7 +66,7 @@ curl http://localhost:8000/v1/embeddings \
 
 ## Mixed Embeddings
 
-Using [jinaai/jina-clip-v1](https://huggingface.co/jinaai/jina-clip-v1)
+Using [jinaai/jina-clip-v2](https://huggingface.co/jinaai/jina-clip-v2)
 
 ```bash
 curl http://localhost:8000/v1/embeddings \
@@ -85,7 +85,7 @@ curl http://localhost:8000/v1/embeddings \
 ```json
 {
     "object": "list",
-    "model": "jinaai/jina-clip-v1",
+    "model": "jinaai/jina-clip-v2",
     "data": [
         {
             "object": "embedding",
