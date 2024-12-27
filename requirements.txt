@@ -1,4 +1,6 @@
+einops
 fastapi
 pillow
 sentence-transformers
+timm
 uvicorn
