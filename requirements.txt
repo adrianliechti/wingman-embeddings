@@ -1,7 +1,6 @@
 einops
 fastapi
-numpy<2
 pillow
+sentence-transformers
 timm
-transformers[torch]
 uvicorn
