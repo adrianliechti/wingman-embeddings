@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  REPOSITORY: ghcr.io/adrianliechti/llama-embeddings
+  REPOSITORY: ghcr.io/adrianliechti/wingman-embeddings
 
 tasks:
   run:

@@ -1,4 +1,4 @@
-# LLM Platform Embeddings
+# Wingman Platform Embeddings
 
 A simple FastAPI/Transformers Embeddings implementation mimics the [Jina AI Embeddings API](https://jina.ai/embeddings).
 
@@ -6,10 +6,10 @@ Defaults to [jinaai/jina-embeddings-v3](https://huggingface.co/jinaai/jina-embed
 
 ```bash
 # Using Embeddings Model
-docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-embeddings-v3 ghcr.io/adrianliechti/llama-embeddings
+docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-embeddings-v3 ghcr.io/adrianliechti/wingman-embeddings
 
 # Using CLIP Model
-docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-clip-v2 ghcr.io/adrianliechti/llama-embeddings
+docker run -it --rm -p 8000:8000 -e MODEL=jinaai/jina-clip-v2 ghcr.io/adrianliechti/wingman-embeddings
 ```
 
 ## Text Embeddings
